@@ -2,7 +2,7 @@
 node_modules/
 
 # python virtual env
-venv/
+
 backend/venv/Lib
 backend/venv/Include
 
