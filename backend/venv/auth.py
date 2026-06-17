@@ -1,10 +1,13 @@
 from jose import jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from database import SessionLocal
+from db_model import User
 SECRET_KEY = "LOKESH_SECRET_KEY"
 ALGORITHM = "HS256"
-
+security=HTTPBearer()
 pwd_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto"
@@ -30,3 +33,69 @@ def create_token(data: dict):
         SECRET_KEY,
         algorithm=ALGORITHM
     )
+from jose import JWTError
+
+def decode_token(token):
+
+    try:
+
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+
+        return payload
+
+    except JWTError:
+
+        return None
+def get_current_user(
+
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+
+):
+
+    token = credentials.credentials
+
+    payload = decode_token(token)
+
+    if payload is None:
+
+        raise HTTPException(
+
+            status_code=401,
+
+            detail="Invalid Token"
+
+        )
+
+    id= payload.get("user_id")
+
+    db = SessionLocal()
+
+    user = (
+
+        db.query(User)
+
+        .filter(
+
+            User.id == id
+
+        )
+
+        .first()
+
+    )
+
+    if user is None:
+
+        raise HTTPException(
+
+            status_code=401,
+
+            detail="User not found"
+
+        )
+
+    return user

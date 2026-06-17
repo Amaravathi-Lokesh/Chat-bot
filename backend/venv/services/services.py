@@ -11,12 +11,14 @@ from util.faiss_manger import search,get_chunk_ids
 from util.selected_documents import select_documents
 from services.memory_service import MemoryService
 from services.memory_extractor import MemoryExtractor
+from services.cache_services import CacheService
 class Service:
     def __init__(self):
         self.genai = Ai()
         self.ai=AIservice()
         self.memory_service=MemoryService()
         self.memory_extractor=MemoryExtractor(self.ai)
+        self.cache=CacheService()
     def retrieve_chunks(
     self,
     question,
@@ -628,8 +630,11 @@ class Service:
         expand=await self.expand_query(search_query)
         queries=await self.multi_query(search_query)
         query_embedding=create_embedding(expand["main"])
+        cached,scored=self.cache.search(db,query_embedding)
         faiss_score,faiss_id=search(query_embedding,top_k=100)
         chunk_id=get_chunk_ids(faiss_id)
+        if cached and scored>0.95:
+            return cached.answer
         # print("FAISS Chunk IDs")
         # print(chunk_id)
         # print(faiss_score)
@@ -1114,6 +1119,7 @@ Return updated memory only.
             "\\n",
             "\n"
         )
+        self.cache.save(db,content,query_embedding,clean_response)
 
         return  clean_response
         

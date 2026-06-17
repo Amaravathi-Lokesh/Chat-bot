@@ -10,7 +10,9 @@ from model.models import (
     ChatListResponse,
     MessageResponse
 )
+from fastapi import Depends
 
+from auth import get_current_user
 from services.services import Service
 
 router = APIRouter()
@@ -94,11 +96,11 @@ async def get_chat_history(chat_id: int):
 
 # ================= SEND MESSAGE (🔥 MAIN FIX) =================
 @router.post("/chat/send")
-async def send_message(req: Request):
+async def send_message(req: Request,current_user=Depends(get_current_user)):
 
     data = await req.json()
 
-    user_id = data["user_id"]
+    user_id = current_user.username
     chat_id = data["chat_id"]
     message = data["message"]
 

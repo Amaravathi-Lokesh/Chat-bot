@@ -109,3 +109,15 @@ class ChatMemory(Base):
     value=Column(Text)
 
     confidence=Column(Float,default=1.0)
+class ResponseCache(Base):
+    __tablename__ = "response_cache"
+
+    id = Column(Integer, primary_key=True)
+
+    question = Column(Text)
+
+    embedding = Column(JSON)
+
+    answer = Column(Text)
+
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

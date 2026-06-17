@@ -81,12 +81,13 @@ async def login(req: LoginRequest):
 
     token = create_token(
             {
-                "user_id": user.username
+                "user_id": str(user.id)
             }
         )
 
     response = {
             "access_token": token,
+            "token_type":"Bearer",
             "username": user.username
         }
 
