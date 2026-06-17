@@ -2,11 +2,15 @@
 node_modules/
 
 # python virtual env
-
+backend/venv/Scripts
 backend/venv/Lib
 backend/venv/Include
 
-
+# chats
+chat.db
+chat1.db
+faiss_meta.pkl
+faiss.index
 # cache
 __pycache__/
 *.pyc
