@@ -5,7 +5,7 @@ node_modules/
 backend/venv/Scripts
 backend/venv/Lib
 backend/venv/Include
-
+backend/venv/upload
 # chats
 chat.db
 chat1.db
