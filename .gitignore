@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# python virtual env
+venv/
+backend/venv/Lib
+backend/venv/Include
+
+
+# cache
+__pycache__/
+*.pyc
+
+# environment variables
+.env
+
+# build folders
+dist/
+build/
+
+# OS files
+.DS_Store
