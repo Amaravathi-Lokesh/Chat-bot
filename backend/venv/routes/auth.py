@@ -7,7 +7,9 @@ from db_model import User
 from auth import (
     hash_password,
     verify_password,
-    create_token
+    create_access_token,
+    create_refresh_token,
+    decode_token
 )
 
 from model.models import (
@@ -79,19 +81,75 @@ async def login(req: LoginRequest):
             detail="Invalid credentials"
         )
 
-    token = create_token(
-            {
-                "user_id": str(user.id)
-            }
-        )
+    access_token=create_access_token(
 
-    response = {
-            "access_token": token,
-            "token_type":"Bearer",
-            "username": user.username
+    {
+        "user_id":user.username
+    }
+
+)
+
+    refresh_token=create_refresh_token(
+
+        {
+            "user_id":user.username
         }
 
-        # print("LOGIN RESPONSE:")
-        # print(response)
+    )
 
-    return response
+    return{
+
+            "access_token":access_token,
+
+            "refresh_token":refresh_token,
+
+            "token_type":"bearer",
+
+            "username":user.username
+
+        }
+@router.post("/refresh")
+
+async def refresh(req:LoginRequest):
+
+    data=await req.json()
+
+    token=data["refresh_token"]
+
+    payload=decode_token(token)
+
+    if not payload:
+
+        raise HTTPException(
+
+            401,
+
+            "Invalid refresh token"
+
+        )
+
+    if payload["type"]!="refresh":
+
+        raise HTTPException(
+
+            401,
+
+            "Invalid token type"
+
+        )
+
+    access=create_access_token(
+
+        {
+
+            "user_id":payload["user_id"]
+
+        }
+
+    )
+
+    return{
+
+        "access_token":access
+
+    }

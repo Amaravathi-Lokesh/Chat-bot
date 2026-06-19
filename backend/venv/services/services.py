@@ -521,6 +521,11 @@ class Service:
         )
         if chat is None:
             raise Exception(f"Chat {chat_id} not found")
+        # if not chat:
+        #     raise HTTPException(404, "Chat not found")
+
+        # if chat.user_id != current_user.username:
+        #     raise HTTPException(403, "Unauthorized")
 
         if chat.title == "New Chat":
 

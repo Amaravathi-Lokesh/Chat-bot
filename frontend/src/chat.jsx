@@ -124,6 +124,7 @@ useEffect(() => {
   if (!input.trim() || !activeChat) return;
 
   const msg = input.trim();
+  const token=localStorage.getItem("access_token");
   const isFirstMessage = messages.length === 0;
 
   setInput("");
@@ -144,10 +145,11 @@ useEffect(() => {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          user_id: userId,
+          // user_id: userId,
           chat_id: activeChat,
           message: msg
         })

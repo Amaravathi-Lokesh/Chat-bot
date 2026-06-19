@@ -7,6 +7,8 @@ from database import SessionLocal
 from db_model import User
 SECRET_KEY = "LOKESH_SECRET_KEY"
 ALGORITHM = "HS256"
+Refresh_token=7
+Access_token=30
 security=HTTPBearer()
 pwd_context = CryptContext(
     schemes=["bcrypt"],
@@ -19,13 +21,28 @@ def hash_password(password):
 def verify_password(password, hashed):
     return pwd_context.verify(password, hashed)
 
-def create_token(data: dict):
+def create_refresh_token(data: dict):
 
     payload = data.copy()
 
     payload["exp"] = (
         datetime.utcnow()
-        + timedelta(days=7)
+        + timedelta(days=Refresh_token)
+    )
+
+    return jwt.encode(
+        payload,
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
+def create_access_token(data):
+
+    payload=data.copy()
+
+    payload["type"]="access"
+
+    payload["exp"]=datetime.utcnow()+timedelta(
+        minutes=Access_token
     )
 
     return jwt.encode(

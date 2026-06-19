@@ -58,10 +58,17 @@ export default function Login() {
         );
 
         localStorage.setItem(
-          "token",
+          "access_token",
           data.access_token || ""
         );
-
+        localStorage.setItem(
+          "refresh_token",
+          data.refresh_token || ""
+        );
+        localStorage.setItem(
+          "token_type",
+          data.token_type || "bearer"
+        )
         console.log("LOGIN SUCCESS");
 
         navigate("/chat");
