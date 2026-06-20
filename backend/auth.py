@@ -5,8 +5,8 @@ from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from database import SessionLocal
 from db_model import User
-from config.settings import Settings
-SECRET_KEY = Settings.key
+from config.settings import settings
+SECRET_KEY = settings.key
 ALGORITHM = "HS256"
 Refresh_token=7
 Access_token=3
@@ -15,7 +15,7 @@ pwd_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto"
 )
-
+print("SECRET_KEY:", SECRET_KEY)
 def hash_password(password):
     return pwd_context.hash(password)
 
@@ -54,18 +54,21 @@ def create_access_token(data):
 from jose import JWTError
 
 def decode_token(token):
-
     try:
+        print(jwt.get_unverified_header(token))
+        print(jwt.get_unverified_claims(token))
 
         payload = jwt.decode(
             token,
             SECRET_KEY,
-            algorithms=[ALGORITHM]
+            algorithms=["HS256"]
         )
 
+        print(payload)
         return payload
 
-    except JWTError as e:
+    except Exception as e:
+        print(type(e))
         print(e)
         return None
 # def get_current_user(
