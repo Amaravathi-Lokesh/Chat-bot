@@ -33,4 +33,5 @@ httpx
 scikit-learn
 
 huggingface-hub
+
 psycopg2-binary

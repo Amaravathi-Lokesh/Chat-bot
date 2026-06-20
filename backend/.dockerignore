@@ -2,17 +2,14 @@
 node_modules/
 
 # python virtual env
-backend/venv
+backend/venv/Scripts
 backend/venv/Lib
 backend/venv/Include
 backend/venv/upload
-backend/upload
-
 # chats
 chat.db
 chat1.db
-faiss_meta.pkl
-faiss.index
+
 # cache
 __pycache__/
 *.pyc
