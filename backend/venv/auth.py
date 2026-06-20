@@ -5,7 +5,8 @@ from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from database import SessionLocal
 from db_model import User
-SECRET_KEY = "LOKESH_SECRET_KEY"
+from config.settings import Settings
+SECRET_KEY = Settings.key
 ALGORITHM = "HS256"
 Refresh_token=7
 Access_token=3
