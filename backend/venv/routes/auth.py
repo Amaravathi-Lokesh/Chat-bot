@@ -84,7 +84,8 @@ async def login(req: LoginRequest):
     access_token=create_access_token(
 
     {
-        "user_id":user.username
+        "user_id":user.id,
+        "username":user.username
     }
 
 )
@@ -92,7 +93,8 @@ async def login(req: LoginRequest):
     refresh_token=create_refresh_token(
 
         {
-            "user_id":user.username
+            "user_id":user.id,
+            "username":user.username
         }
 
     )

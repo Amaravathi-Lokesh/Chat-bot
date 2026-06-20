@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from database import engine, Base
-from db_model import Message, Chat,User
+from db_model import Message, Chat,User,Document,DocumentChunk,ChatMemory,ActiveEntity,ResponseCache
 
 # Create tables
 Base.metadata.create_all(bind=engine)

@@ -100,7 +100,7 @@ async def send_message(req: Request,current_user=Depends(get_current_user)):
 
     data = await req.json()
 
-    user_id = current_user[user_id]
+    user_id = current_user.id
     chat_id = data["chat_id"]
     message = data["message"]
 

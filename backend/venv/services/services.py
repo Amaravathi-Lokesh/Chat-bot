@@ -852,7 +852,7 @@ class Service:
                     chat_id=chat_id,
                     entity=entity,
                     entity_type="GENERAL",
-                    confidence=entity
+                    confidence=1.0
                 )
                 db.add(obj)
             db.commit()

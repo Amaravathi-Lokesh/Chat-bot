@@ -8,7 +8,7 @@ from db_model import User
 SECRET_KEY = "LOKESH_SECRET_KEY"
 ALGORITHM = "HS256"
 Refresh_token=7
-Access_token=30
+Access_token=3
 security=HTTPBearer()
 pwd_context = CryptContext(
     schemes=["bcrypt"],
@@ -42,7 +42,7 @@ def create_access_token(data):
     payload["type"]="access"
 
     payload["exp"]=datetime.utcnow()+timedelta(
-        minutes=Access_token
+        days=Access_token
     )
 
     return jwt.encode(
@@ -64,55 +64,98 @@ def decode_token(token):
 
         return payload
 
-    except JWTError:
-
+    except JWTError as e:
+        print(e)
         return None
+# def get_current_user(
+
+#     credentials: HTTPAuthorizationCredentials = Depends(security)
+
+# ):
+
+#     token = credentials.credentials
+
+#     payload = decode_token(token)
+
+#     if payload is None:
+
+#         raise HTTPException(
+
+#             status_code=401,
+
+#             detail="Invalid Token"
+
+#         )
+
+#     id= payload.get("user_id")
+
+#     db = SessionLocal()
+
+#     user = (
+
+#         db.query(User)
+
+#         .filter(
+
+#             User.id == int(id)
+
+#         )
+
+#         .first()
+
+#     )
+
+#     if user is None:
+
+#         raise HTTPException(
+
+#             status_code=401,
+
+#             detail="User not found"
+
+#         )
+
+#     return user
 def get_current_user(
-
     credentials: HTTPAuthorizationCredentials = Depends(security)
-
 ):
 
     token = credentials.credentials
 
+    print("TOKEN:")
+    print(token)
+
     payload = decode_token(token)
 
+    print("PAYLOAD:")
+    print(payload)
+
     if payload is None:
-
         raise HTTPException(
-
             status_code=401,
-
             detail="Invalid Token"
-
         )
 
-    id= payload.get("user_id")
+    user_id = payload.get("user_id")
+
+    # print("USER ID:")
+    # print(user_id)
+    # print(type(user_id))
 
     db = SessionLocal()
 
     user = (
-
         db.query(User)
-
         .filter(
-
-            User.id == id
-
+            User.id == int(user_id)
         )
-
         .first()
-
     )
 
     if user is None:
-
         raise HTTPException(
-
             status_code=401,
-
             detail="User not found"
-
         )
 
     return user
