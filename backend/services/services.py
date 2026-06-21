@@ -146,8 +146,12 @@ class Service:
         response = response.replace("```json", "")
 
         response = response.replace("```", "")
+        if hasattr(response, "content"):
+            response = response.content
 
-        response = response.strip()
+        response = str(response).strip()
+
+        # response = response.strip()
         print(response)
         try:
             
@@ -272,7 +276,10 @@ class Service:
                 prompt
             )
 
-            rewritten = rewritten.strip()
+            if hasattr(rewritten, "content"):
+                rewritten = rewritten.content
+
+            rewritten = str(rewritten).strip()
 
             if (
                 "AI service" in rewritten

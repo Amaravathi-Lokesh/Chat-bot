@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from database import Base
 import datetime
 from util.embedding import create_embedding
+from pgvector.sqlalchemy import Vector
 class Message(Base):
     __tablename__ = "messages"
 
@@ -58,16 +59,8 @@ class DocumentChunk(Base):
 
     __tablename__ = "document_chunks"
 
-    id = Column(
-        Integer,
-        primary_key=True
-    )
-
-    document_id = Column(
-        Integer,
-        ForeignKey("documents.id")
-    )
-
+    id = Column(Integer,primary_key=True)
+    document_id = Column(Integer,ForeignKey("documents.id"))
     chunk_number = Column(Integer)
     topic=Column(String)
     keywords = Column(String)
@@ -75,8 +68,7 @@ class DocumentChunk(Base):
     page_number=Column(Integer)
     token_count=Column(Integer)
     chunk_text = Column(Text)
-
-    embedding = Column(JSON)
+    embedding = Column(Vector(384))
     document = relationship(
         "Document",
         back_populates="chunks"

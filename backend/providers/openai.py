@@ -44,4 +44,4 @@ class AIservice:
 
                 print(e)
 
-                return "AI service is temporarily unavailable."
+                return "OPENAI service is temporarily unavailable."

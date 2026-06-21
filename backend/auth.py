@@ -37,7 +37,7 @@ def create_refresh_token(data: dict):
         algorithm=ALGORITHM
     )
 def create_access_token(data):
-
+    print("CREATE SECRET:", SECRET_KEY)
     payload=data.copy()
 
     payload["type"]="access"
@@ -57,7 +57,7 @@ def decode_token(token):
     try:
         print(jwt.get_unverified_header(token))
         print(jwt.get_unverified_claims(token))
-
+        print("DECODE SECRET:", SECRET_KEY)
         payload = jwt.decode(
             token,
             SECRET_KEY,

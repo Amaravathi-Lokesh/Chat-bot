@@ -20,3 +20,4 @@ huggingface-hub
 psycopg2-binary
 google-genai
 PyMuPDF
+pgvector
