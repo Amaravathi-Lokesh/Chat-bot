@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 from database import engine, Base
 from db_model import Message, Chat,User,Document,DocumentChunk,ChatMemory,ActiveEntity,ResponseCache
-
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi import _rate_limit_exceeded_handler
 # Create tables
 Base.metadata.create_all(bind=engine)
 
@@ -9,6 +13,20 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="FastAPI Chatbot",
     version="1.0.0"
+)
+limiter = Limiter(
+    key_func=get_remote_address
+)
+
+app.state.limiter = limiter
+
+app.add_exception_handler(
+    RateLimitExceeded,
+    _rate_limit_exceeded_handler
+)
+
+app.add_middleware(
+    SlowAPIMiddleware
 )
 
 # Import routers
@@ -32,3 +50,31 @@ from routes.auth import router as auth_router
 app.include_router(auth_router)
 from routes.upload import router as upload_router
 app.include_router(upload_router)
+from redis_client import redis_client
+
+@app.get("/redis-test")
+def redis_test():
+
+    redis_client.set(
+        "hello",
+        "world"
+    )
+
+    value = redis_client.get(
+        "hello"
+    )
+
+    return {
+        "value": value
+    }
+from services.cache_service import CacheService
+
+@app.get("/cache-test")
+def cache_test():
+
+    CacheService.set(
+        "test",
+        {"message": "hello"}
+    )
+
+    return CacheService.get("test")

@@ -1,5 +1,5 @@
 # from sympy import content
-
+from services.cache_service import CacheService
 import json
 import numpy as np
 from util.embedding import create_embedding
@@ -647,6 +647,20 @@ class Service:
         chunk_id=get_chunk_ids(faiss_id)
         if cached and scored>0.95:
             return cached.answer
+        #####CACHA CODE #######
+        # cache_key = f"search:{expand['main']}"
+
+        # cached_chunks = CacheService.get(
+        #     cache_key
+        # )
+
+        # if cached_chunks:
+
+        #     print("CACHE HIT")
+
+        #     return cached_chunks
+
+        # print("CACHE MISS")
         # print("FAISS Chunk IDs")
         # print(chunk_id)
         # print(faiss_score)
@@ -670,7 +684,19 @@ class Service:
             .all()
         )
         # print("loaded chunks:",chunks)
+        # chunk_data = [
+        #     {
+        #         "id": chunk.id,
+        #         "text": chunk.chunk_text
+        #     }
+        #     for chunk in chunks
+        # ]
 
+        # CacheService.set(
+        #     cache_key,
+        #     chunk_data,
+        #     ttl=3600
+        # )
         scores = []
 
         for q in queries:

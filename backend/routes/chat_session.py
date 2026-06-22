@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Request,Depends
 from sqlalchemy.orm import Session
-
+from depends.rate_limit import enforce_rate_limit
 from database import SessionLocal, get_db
 from db_model import Chat, Message
 from datetime import datetime
@@ -10,6 +10,7 @@ from model.models import (
     ChatListResponse,
     MessageResponse
 )
+from main import limiter
 from fastapi import Depends
 
 from auth import get_current_user
@@ -96,9 +97,10 @@ async def get_chat_history(chat_id: int):
 
 # ================= SEND MESSAGE (🔥 MAIN FIX) =================
 @router.post("/chat/send")
-async def send_message(req: Request,current_user=Depends(get_current_user)):
-
-    data = await req.json()
+@limiter.limit("10/minute")
+async def send_message(request: Request,current_user=Depends(get_current_user)):
+    enforce_rate_limit(current_user.id)
+    data = await request.json()
 
     user_id = current_user.id
     chat_id = data["chat_id"]
