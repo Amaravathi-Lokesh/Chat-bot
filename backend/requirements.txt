@@ -8,7 +8,7 @@ python-dotenv
 openai
 numpy
 # faiss-cpu
-# sentence-transformers
+sentence-transformers
 # transformers
 
 pypdf
