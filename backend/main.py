@@ -1,7 +1,7 @@
 # raise Exception("MAIN FILE REACHED")
-print("step-1")
+# print("step-1")
 from fastapi import FastAPI
-print("step-2")
+# print("step-2")
 from database import engine, Base
 from db_model import Message, Chat,User,Document,DocumentChunk,ChatMemory,ActiveEntity,ResponseCache
 from slowapi import Limiter
@@ -12,7 +12,7 @@ from slowapi import _rate_limit_exceeded_handler
 # Create tables
 print("MAIN.PY STARTED")
 print("Importing DATABASE")
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 # FastAPI app
 app = FastAPI(
