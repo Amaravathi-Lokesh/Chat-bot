@@ -10,7 +10,7 @@ from slowapi import _rate_limit_exceeded_handler
 # Create tables
 print("MAIN.PY STARTED")
 print("Importing DATABASE")
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 # FastAPI app
 app = FastAPI(
