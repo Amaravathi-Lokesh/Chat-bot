@@ -7,18 +7,18 @@ passlib[bcrypt]==1.7.4
 python-dotenv
 openai
 numpy
-faiss-cpu
-sentence-transformers
-transformers
+# faiss-cpu
+# sentence-transformers
+# transformers
 
 pypdf
 python-multipart
 requests
 httpx
 scikit-learn
-huggingface-hub
+# huggingface-hub
 psycopg2-binary
-google-genai
+# google-genai
 PyMuPDF
 pgvector
 redis
