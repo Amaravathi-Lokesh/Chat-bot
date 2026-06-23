@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks
 import fitz
 import shutil
 import os
@@ -13,20 +13,23 @@ from util.document_parser import parse_document
 from util.topic_detector import detect_topic
 from util.keyword_extractor import extract_keywords
 from util.faiss_manger import *
+from services.document_process import process_document
 router = APIRouter()
 
-UPLOAD_DIR = r"C:\Users\amara\OneDrive\Desktop\fastapi-chatbot\backend\venv\upload"
+UPLOAD_DIR = "upload"
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 @router.post("/upload/document")
 async def upload_document(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     user_id:str =Form(...),
     chat_id:str =Form(...)
     
 ):   
+  
     
     path = os.path.join(
         UPLOAD_DIR,
@@ -34,6 +37,13 @@ async def upload_document(
     )
      # Assuming the user object has an 'id' field
     # Save PDF
+    background_tasks.add_task(
+    process_document,
+    path,
+    file.filename,
+    user_id,
+    chat_id
+)
 
     with open(path, "wb") as buffer:
         shutil.copyfileobj(
@@ -158,7 +168,7 @@ async def upload_document(
 
         db.add(c)
         db.flush()
-        db.refresh(c)
+        # db.refresh(c)
         add_vector(embedding ,c.id)
 
     # Commit once
@@ -166,7 +176,7 @@ async def upload_document(
     db.commit()
 
     db.close()
-
+    
     return {
 
         "filename": file.filename,
