@@ -8,7 +8,8 @@ from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
 # Create tables
 Base.metadata.create_all(bind=engine)
-
+print("MAIN.PY STARTED")
+print("Importing DATABASE")
 # FastAPI app
 app = FastAPI(
     title="FastAPI Chatbot",
@@ -51,7 +52,8 @@ app.include_router(auth_router)
 from routes.upload import router as upload_router
 app.include_router(upload_router)
 from redis_client import redis_client
-
+print("Database imported")
+print("roytes imported")
 @app.get("/redis-test")
 def redis_test():
 
