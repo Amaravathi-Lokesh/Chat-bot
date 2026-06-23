@@ -4,7 +4,7 @@ from sqlalchemy import Column, DateTime, Integer, String, Text,ForeignKey,JSON,F
 from sqlalchemy.orm import relationship
 from database import Base
 import datetime
-from util.embedding import create_embedding
+from services.openai_embedding import create_embedding
 from pgvector.sqlalchemy import Vector
 class Message(Base):
     __tablename__ = "messages"
