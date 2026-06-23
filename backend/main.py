@@ -1,4 +1,4 @@
-
+raise Exception("MAIN FILE REACHED")
 from fastapi import FastAPI
 from database import engine, Base
 from db_model import Message, Chat,User,Document,DocumentChunk,ChatMemory,ActiveEntity,ResponseCache
@@ -82,4 +82,3 @@ def cache_test():
     )
 
     return CacheService.get("test")
-raise Exception("MAIN FILE REACHED")
