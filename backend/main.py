@@ -7,9 +7,10 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
 # Create tables
-Base.metadata.create_all(bind=engine)
 print("MAIN.PY STARTED")
 print("Importing DATABASE")
+Base.metadata.create_all(bind=engine)
+
 # FastAPI app
 app = FastAPI(
     title="FastAPI Chatbot",
