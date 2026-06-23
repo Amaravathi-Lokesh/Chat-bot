@@ -7,7 +7,7 @@ passlib[bcrypt]==1.7.4
 python-dotenv
 openai
 numpy
-# faiss-cpu
+faiss-cpu
 # sentence-transformers
 # transformers
 
