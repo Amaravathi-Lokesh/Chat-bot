@@ -46,15 +46,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 from routes.chat import router as chat_router
-# from routes.chat_session import router as chat_session_router
+from routes.chat_session import router as chat_session_router
 
-# # Register routers (ONLY ONCE)
-# # app.include_router(chat_router)
-# app.include_router(chat_session_router)
+# Register routers (ONLY ONCE)
+# app.include_router(chat_router)
+app.include_router(chat_session_router)
 from routes.auth import router as auth_router
 app.include_router(auth_router)
-# from routes.upload import router as upload_router
-# app.include_router(upload_router)
+from routes.upload import router as upload_router
+app.include_router(upload_router)
 from redis_client import redis_client
 print("Database imported")
 print("roytes imported")
