@@ -8,7 +8,7 @@ python-dotenv
 openai
 numpy
 # faiss-cpu
-#sentence-transformers
+# sentence-transformers
 # transformers
 
 pypdf
@@ -18,7 +18,7 @@ httpx
 scikit-learn
 # huggingface-hub
 psycopg2-binary
-# google-genai
+google-genai
 PyMuPDF
 pgvector
 redis
