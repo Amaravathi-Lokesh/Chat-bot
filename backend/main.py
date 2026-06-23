@@ -1,5 +1,7 @@
 # raise Exception("MAIN FILE REACHED")
+print("step-1")
 from fastapi import FastAPI
+print("step-2")
 from database import engine, Base
 from db_model import Message, Chat,User,Document,DocumentChunk,ChatMemory,ActiveEntity,ResponseCache
 from slowapi import Limiter
