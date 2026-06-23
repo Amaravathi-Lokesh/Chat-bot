@@ -10,7 +10,7 @@ from model.models import (
     ChatListResponse,
     MessageResponse
 )
-from main import limiter
+from depends.limiter import limiter
 from fastapi import Depends
 
 from auth import get_current_user

@@ -2,7 +2,7 @@
 from services.cache_service import CacheService
 import json
 import numpy as np
-from util.embedding import create_embedding
+from services.openai_embedding import create_embedding
 from providers.ai import Ai
 from providers.openai import AIservice
 from db_model import DocumentChunk, Message, Chat,Document,ActiveEntity
