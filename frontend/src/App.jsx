@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Login";
-import Chat from "./Chat";
+import Login from "./login";
+import Chat from "./chat";
 
 export default function App() { 
   const user = localStorage.getItem("user");
