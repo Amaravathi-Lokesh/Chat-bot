@@ -675,7 +675,7 @@ class Service:
         chunks = (
             db.query(DocumentChunk)
             .filter(
-                DocumentChunk.id==chunk_id
+                DocumentChunk.id.in_(chunk_id)
             )
             .filter(
                 DocumentChunk.document_id.in_(document_ids)
