@@ -13,7 +13,7 @@ export default function App() {
       {/* CHAT (PROTECTED) */}
       <Route
         path="/chat"
-        element={user ? <Chat /> : <Navigate to="/" />}
+        element={<Chat/>}
       />
 
       {/* fallback */}
