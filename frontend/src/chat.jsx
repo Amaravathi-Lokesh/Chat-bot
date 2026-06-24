@@ -20,7 +20,7 @@ export default function Chat() {
   useEffect(() => {
     if (!userId) return;
 
-    fetch(`http://127.0.0.1:8000/chat/list/${userId}`)
+    fetch(`https://chat-bot-xlrz.onrender.com/chat/list/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setChats(data || []);
@@ -43,7 +43,7 @@ useEffect(() => {
 
   setInput("");
 
-  fetch(`http://127.0.0.1:8000/chat/history/${activeChat}`)
+  fetch(`https://chat-bot-xlrz.onrender.com/chat/history/${activeChat}`)
     .then((res) => res.json())
     .then((data) => {
       setMessages(data || []);
@@ -58,7 +58,7 @@ useEffect(() => {
 // console.log("Input:", input);
   const loadChats = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/chat/list/${userId}`);
+      const res = await fetch(`https://chat-bot-xlrz.onrender.com/chat/list/${userId}`);
       const data = await res.json();
       setChats(data);
     } catch (err) {
@@ -69,7 +69,7 @@ useEffect(() => {
   const createNewChat = async () => {
   try {
     const res = await fetch(
-      "http://127.0.0.1:8000/chat/create",
+      "https://chat-bot-xlrz.onrender.com/chat/create",
       {
         method: "POST",
         headers: {
@@ -106,7 +106,7 @@ useEffect(() => {
     if (!confirmDelete) return;
 
     await fetch(
-      `http://127.0.0.1:8000/chat/delete/${chatId}`,
+      `https://chat-bot-xlrz.onrender.com/chat/delete/${chatId}`,
       { method: "DELETE" }
     );
 
@@ -141,7 +141,7 @@ useEffect(() => {
   try {
 
     const res = await fetch(
-      "http://127.0.0.1:8000/chat/send",
+      "https://chat-bot-xlrz.onrender.com/chat/send",
       {
         method: "POST",
         headers: {
@@ -173,7 +173,7 @@ useEffect(() => {
         msg.split(" ").slice(0, 4).join(" ") + "...";
 
       await fetch(
-        `http://127.0.0.1:8000/chat/rename/${activeChat}?title=${encodeURIComponent(smartTitle)}`,
+        `https://chat-bot-xlrz.onrender.com/chat/rename/${activeChat}?title=${encodeURIComponent(smartTitle)}`,
         {
           method: "PUT"
         }
@@ -227,7 +227,7 @@ useEffect(() => {
   ]);
 
   const response = await fetch(
-    "http://127.0.0.1:8000/chat/stream",
+    "https://chat-bot-xlrz.onrender.com/chat/stream",
     {
       method: "POST",
       headers: {
@@ -308,7 +308,7 @@ const uploadFile = async () => {
 
   try {
     const res = await fetch(
-      "http://127.0.0.1:8000/upload/document",
+      "https://chat-bot-xlrz.onrender.com/upload/document",
       {
         method: "POST",
         body: formData,
