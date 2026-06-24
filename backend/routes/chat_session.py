@@ -99,7 +99,7 @@ async def get_chat_history(chat_id: int):
 @router.post("/chat/send")
 @limiter.limit("10/minute")
 async def send_message(request: Request,current_user=Depends(get_current_user)):
-    enforce_rate_limit(current_user.id)
+    # enforce_rate_limit(current_user.id)
     data = await request.json()
 
     user_id = current_user.id

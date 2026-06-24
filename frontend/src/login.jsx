@@ -14,8 +14,8 @@ export default function Login() {
 
     try {
       const endpoint = isLogin
-        ? "http://127.0.0.1:8000/auth/login"
-        : "http://127.0.0.1:8000/auth/register";
+        ? "https://chat-bot-xlrz.onrender.com/auth/login"
+        : "https://chat-bot-xlrz.onrender.com/auth/register";
 
       const payload = isLogin
         ? { username, password }

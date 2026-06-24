@@ -56,33 +56,4 @@ app.include_router(upload_router)
 from redis_client import redis_client
 # print("Database imported")
 # print("roytes imported")
-@app.get("/redis-test")
-def redis_test():
-
-    redis_client.set(
-        "hello",
-        "world"
-    )
-
-    value = redis_client.get(
-        "hello"
-    )
-
-    return {
-        "value": value
-    }
-from services.cache_service import CacheService
-
-@app.get("/cache-test")
-def cache_test():
-
-    CacheService.set(
-        "test",
-        {"message": "hello"}
-    )
-
-    return CacheService.get("test")
-@app.get("/")
-def root():
-    return "Backend Running"
-print("MAIN LAST LINE")
+print("Main last line")
