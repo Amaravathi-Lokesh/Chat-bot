@@ -10,8 +10,8 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
 # Create tables
-# print("MAIN.PY STARTED")
-# print("Importing DATABASE")
+print("MAIN.PY STARTED")
+print("Importing DATABASE")
 Base.metadata.create_all(bind=engine)
 
 # FastAPI app
