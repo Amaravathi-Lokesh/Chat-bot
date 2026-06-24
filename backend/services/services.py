@@ -678,7 +678,7 @@ class Service:
         DocumentChunk.embedding.cosine_distance(query_embedding)
     )
     .limit(20)
-    .all()
+    .all() 
 )
         # print("loaded chunks:",chunks)
         # chunk_data = [
