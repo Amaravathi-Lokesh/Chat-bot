@@ -68,7 +68,7 @@ class DocumentChunk(Base):
     page_number=Column(Integer)
     token_count=Column(Integer)
     chunk_text = Column(Text)
-    embedding = Column(Vector(1536))
+    embedding = Column(JSON)
     document = relationship(
         "Document",
         back_populates="chunks"
