@@ -7,7 +7,7 @@ from providers.ai import Ai
 from providers.openai import AIservice
 from db_model import DocumentChunk, Message, Chat,Document,ActiveEntity
 from sqlalchemy.orm import Session
-# from util.faiss_manger import search,get_chunk_ids
+from util.faiss_manger import search,get_chunk_ids
 from util.selected_documents import select_documents
 from services.memory_service import MemoryService
 from services.memory_extractor import MemoryExtractor
@@ -643,8 +643,8 @@ class Service:
         queries=await self.multi_query(search_query)
         query_embedding=create_embedding(expand["main"])
         cached,scored=self.cache.search(db,query_embedding)
-        # faiss_score,faiss_id=search(query_embedding,top_k=100)
-        # chunk_id=get_chunk_ids(faiss_id)
+        faiss_score,faiss_id=search(query_embedding,top_k=100)
+        chunk_id=get_chunk_ids(faiss_id)
         if cached and scored>0.95:
             return cached.answer
         #####CACHA CODE #######
@@ -674,12 +674,15 @@ class Service:
         
         chunks = (
             db.query(DocumentChunk)
-    .order_by(
-        DocumentChunk.embedding.cosine_distance(query_embedding)
-    )
-    .limit(20)
-    .all() 
-)
+            .filter(
+                DocumentChunk.id.in_(chunk_id)
+            )
+            .filter(
+                DocumentChunk.document_id.in_(document_ids)
+            )
+            
+            .all()
+        )
         # print("loaded chunks:",chunks)
         # chunk_data = [
         #     {
