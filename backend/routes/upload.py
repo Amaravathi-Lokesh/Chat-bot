@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks
 import fitz
 import shutil
 import os
-from util.embedding import create_embedding
+from services.openai_embedding import create_embedding
 from util.chunker import chunk_text
 from database import SessionLocal
 from db_model import Document, DocumentChunk
