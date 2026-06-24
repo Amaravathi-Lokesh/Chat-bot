@@ -82,3 +82,4 @@ def cache_test():
     )
 
     return CacheService.get("test")
+print("MAIN LAST LINE")
