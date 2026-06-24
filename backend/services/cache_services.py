@@ -7,7 +7,8 @@ class CacheService:
 
         a=np.array(a)
         b=np.array(b)
-
+        if len(a)!=len(b):
+            return 0
         return np.dot(a,b)/(np.linalg.norm(a)*np.linalg.norm(b))
 
     def search(self,db,embedding):
