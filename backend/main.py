@@ -82,4 +82,7 @@ def cache_test():
     )
 
     return CacheService.get("test")
+@app.get("/")
+def root():
+    return "Backend Running"
 print("MAIN LAST LINE")
