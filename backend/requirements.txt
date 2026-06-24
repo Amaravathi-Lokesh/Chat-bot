@@ -8,15 +8,15 @@ python-dotenv
 openai
 numpy
 faiss-cpu
-sentence-transformers
-transformers
+# sentence-transformers
+# transformers
 
 pypdf
 python-multipart
 requests
 httpx
 scikit-learn
-huggingface-hub
+# huggingface-hub
 psycopg2-binary
 google-genai
 PyMuPDF
