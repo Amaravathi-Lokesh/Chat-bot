@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import os
 
-DIMENSION=384
+DIMENSION=1536
 
 INDEX_FILE="faiss.index"
 
