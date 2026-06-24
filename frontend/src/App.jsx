@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Chat from "./Chat";
 
-export default function App() {
+export default function App() { 
   const user = localStorage.getItem("user");
 
   return (
