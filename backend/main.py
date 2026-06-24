@@ -45,7 +45,7 @@ app.add_middleware(
 )
 from routes.chat import router as chat_router
 from routes.chat_session import router as chat_session_router
-
+print("ROUTES STARTED")
 # Register routers (ONLY ONCE)
 # app.include_router(chat_router)
 app.include_router(chat_session_router)
