@@ -13,7 +13,7 @@ export default function Chat() {
   const [file, setFile] = useState(null);
   const bottomRef = useRef(null);
   const navigate = useNavigate();
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const userId = localStorage.getItem("user");
 
   // ================= LOAD CHATS =================
@@ -80,6 +80,7 @@ useEffect(() => {
           title: "New Chat",
         }),
       }
+      
     );
 
     const data = await res.json();
@@ -99,6 +100,7 @@ useEffect(() => {
   } catch (err) {
     console.log(err);
   }
+  setSidebarOpen(false);
 };// console.log("chat:",data.id);
   // ================= DELETE CHAT =================
   const deleteChat = async (chatId) => {
@@ -368,13 +370,31 @@ function TypingIndicator() {
 
   return (
   <div className="h-screen w-screen flex flex-col md:flex-row bg-slate-950 text-white overflow-hidden">
-
+    {sidebarOpen && (
+  <div
+    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+    onClick={() => setSidebarOpen(false)}
+  />
+)}
     {/* ================= SIDEBAR ================= */}
-    <div className="hidden md:flex md:w-72 bg-slate-900 flex flex-col border-r border-slate-800">
+    <div
+  className={`
+    fixed md:relative z-50
+    h-full w-72 bg-slate-900 border-r border-slate-800
+    transform transition-transform duration-300
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+    md:translate-x-0
+  `}
+>
 
       {/* TOP ACTIONS */}
       <div className="p-3 space-y-2 border-b border-slate-800">
-
+         <button
+    onClick={() => setSidebarOpen(false)}
+    className="text-xl text-white"
+  >
+    ✕
+  </button>
         <button
           onClick={logout}
           className="w-full bg-red-500 p-2 rounded hover:bg-red-400"
@@ -420,6 +440,7 @@ function TypingIndicator() {
               onClick={() => {
   setActiveChat(c.id);
   setInput("");
+  setSidebarOpen(false);
 }}
             >
               {c.title}
@@ -440,7 +461,13 @@ function TypingIndicator() {
 
     {/* ================= CHAT AREA ================= */}
     <div className="flex-1 flex flex-col h-full overflow-hidden">
-
+      {/*mobile header */}
+       <button
+      onClick={() => setSidebarOpen(true)}
+      className="text-2xl text-cyan-400"
+    >
+      ☰
+    </button>
       {/* MESSAGES AREA */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
 
