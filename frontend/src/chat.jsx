@@ -367,10 +367,10 @@ function TypingIndicator() {
   }, [messages]);
 
   return (
-  <div className="h-screen w-screen flex bg-slate-950 text-white overflow-hidden">
+  <div className="h-screen w-screen flex flex-col md:flex-row bg-slate-950 text-white overflow-hidden">
 
     {/* ================= SIDEBAR ================= */}
-    <div className="w-72 bg-slate-900 flex flex-col border-r border-slate-800">
+    <div className="hidden md:flex md:w-72 bg-slate-900 flex flex-col border-r border-slate-800">
 
       {/* TOP ACTIONS */}
       <div className="p-3 space-y-2 border-b border-slate-800">
@@ -393,7 +393,8 @@ function TypingIndicator() {
         <div>
       <input
         type="file"
-          accept=".pdf"
+        accept=".pdf"
+        className="w-full text-xs md:text-sm"
         onChange={(e) => setFile(e.target.files[0])}
       />
 
@@ -451,7 +452,7 @@ function TypingIndicator() {
     }`}
   >
     <div
-      className={`relative max-w-[75%] p-4 rounded-xl text-left whitespace-pre-wrap break-words ${
+      className={`relative max-w-[90%] md:max-w-[75%] p-4 rounded-xl text-left whitespace-pre-wrap break-words ${
         m.role === "user"
           ? "bg-cyan-500 text-black"
           : "bg-slate-900 text-white"
@@ -514,10 +515,10 @@ function TypingIndicator() {
       </div>
 
       {/* INPUT AREA */}
-      <div className="p-3 border-t border-slate-800 bg-slate-900 flex gap-2">
+      <div className="p-2 md:p-3 border-t border-slate-800 bg-slate-900 flex gap-2">
 
         <input
-          className="flex-1 p-2 bg-slate-800 rounded outline-none"
+          className="flex-1 p-2 md:p-3 bg-slate-800 rounded text-sm md:text-base"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
@@ -526,7 +527,7 @@ function TypingIndicator() {
 
         <button
           onClick={sendMessage}
-          className="bg-cyan-500 px-5 rounded text-black font-semibold"
+          className="bg-cyan-500 px-3 md:px-5 rounded text-sm md:text-base"
         >
           Send
         </button>

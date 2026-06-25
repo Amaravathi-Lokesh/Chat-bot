@@ -84,9 +84,9 @@ export default function Login() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-slate-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
 
-      <div className="w-96 bg-slate-900 p-6 rounded-xl border border-slate-800">
+      <div className="w-full max-w-md bg-slate-900 p-6 rounded-xl border border-slate-800">
 
         <h1 className="text-2xl text-cyan-400 mb-4 text-center">
           AI Chatbot
