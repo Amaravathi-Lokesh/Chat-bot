@@ -8,7 +8,7 @@ client = genai.Client(
 def create_embedding(text):
 
     response = client.models.embed_content(
-        model="text-embedding-002",
+        model="text-embedding-001",
         contents=text
     )
 
