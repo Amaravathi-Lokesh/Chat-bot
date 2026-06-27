@@ -462,6 +462,8 @@ class Service:
         """
 
             result = await self.ai.generate_response(prompt)
+            if result is None:
+                return "CHAT"
 
             return result.strip().upper()
     async def multi_query(self, question):
