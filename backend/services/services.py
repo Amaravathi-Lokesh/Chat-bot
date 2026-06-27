@@ -615,7 +615,7 @@ class Service:
         for d in sedoc:
             print(d.id,d.filename)
         doc_score=[]
-        for d in docs:
+        for d in sedoc:
             s=0
             text=d.extracted_text.lower()
             for w in search_query.lower().split():
@@ -666,6 +666,17 @@ class Service:
         print("Document IDs:", document_ids)
         print("Chunks from DB:", len(chunks))
         print("===========================")
+        print(
+            db.query(DocumentChunk)
+            .filter(DocumentChunk.id.in_(chunk_id))
+            .count()
+        )
+
+        print(
+            db.query(DocumentChunk)
+            .filter(DocumentChunk.document_id.in_(document_ids))
+            .count()
+        )
         # print("loaded chunks:",chunks)
         # chunk_data = [
         #     {
