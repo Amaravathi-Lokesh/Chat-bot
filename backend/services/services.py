@@ -647,29 +647,6 @@ class Service:
         chunk_id=get_chunk_ids(faiss_id)
         if cached and scored>0.95:
             return cached.answer
-        #####CACHA CODE #######
-        # cache_key = f"search:{expand['main']}"
-
-        # cached_chunks = CacheService.get(
-        #     cache_key
-        # )
-
-        # if cached_chunks:
-
-        #     print("CACHE HIT")
-
-        #     return cached_chunks
-
-        # print("CACHE MISS")
-        # print("FAISS Chunk IDs")
-        # print(chunk_id)
-        # print(faiss_score)
-#         search = " ".join(
-#         [expand["main"]] + expand["keywords"]
-# )
-        # print(expand,"\n",*(search))
-        # query_embedding = create_embedding(search)
-        # print(query_embedding)
         
         
         chunks = (
@@ -683,6 +660,12 @@ class Service:
             
             .all()
         )
+        print("========== DEBUG ==========")
+        print("FAISS IDs:", faiss_id)
+        print("Chunk IDs:", chunk_id)
+        print("Document IDs:", document_ids)
+        print("Chunks from DB:", len(chunks))
+        print("===========================")
         # print("loaded chunks:",chunks)
         # chunk_data = [
         #     {
@@ -767,44 +750,6 @@ class Service:
             reverse=True
         )
         
-        # print("="*60)
-
-        # print("TOP RETRIEVAL RESULTS")
-
-        # for item in scores[:10]:
-
-        #     (
-        #         score,
-        #         chunk,
-        #         query_used,
-        #         semantic,
-        #         keyword,
-        #         topic,
-        #         source,
-        #         rerank
-        #     ) = item
-
-        #     print()
-
-        #     print("Score:", round(score,3))
-
-        #     print("Query:", query_used)
-
-        #     print("Semantic:", round(semantic,3))
-
-        #     print("Keyword:", keyword)
-
-        #     print("Topic:", topic)
-
-        #     print("Source:", source)
-
-        #     print("Rerank:", rerank)
-
-        #     print("Chunk Topic:", chunk.topic)
-
-        #     print("Page:", chunk.page_number)
-
-        # print("="*60)
 
         SIMILARITY_THRESHOLD = 0.20
 

@@ -370,6 +370,16 @@ function TypingIndicator() {
 
   return (
   <div className="h-screen w-screen flex flex-col md:flex-row bg-slate-950 text-white overflow-hidden">
+        {/* Hamburger */}
+    <div className="md:hidden absolute top-4 left-4 z-50">
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="bg-slate-800 p-2 rounded"
+      >
+        ☰
+      </button>
+    </div>
+
     {sidebarOpen && (
   <div
     className="fixed inset-0 bg-black/50 z-40 md:hidden"
@@ -462,12 +472,7 @@ function TypingIndicator() {
     {/* ================= CHAT AREA ================= */}
     <div className="flex-1 flex flex-col h-full overflow-hidden">
       {/*mobile header */}
-       <button
-      onClick={() => setSidebarOpen(true)}
-      className="text-2xl text-cyan-400"
-    >
-      ☰
-    </button>
+     
       {/* MESSAGES AREA */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
 
