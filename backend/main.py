@@ -9,6 +9,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi import _rate_limit_exceeded_handler
+from startup import rebuild_faiss
 # Create tables
 print("MAIN.PY STARTED")
 print("Importing DATABASE")
@@ -19,6 +20,11 @@ app = FastAPI(
     title="FastAPI Chatbot",
     version="1.0.0"
 )
+@app.on_event("startup")
+def startup_event():
+    print("Rebuilding FAISS index...")
+    rebuild_faiss()
+    print("FAISS rebuild completed.")
 from depends.limiter import limiter
 
 app.state.limiter = limiter

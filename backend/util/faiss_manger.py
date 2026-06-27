@@ -33,7 +33,7 @@ if os.path.exists(META_FILE):
 else:
 
     metadata=[]
-def add_vector(embedding,chunk_id):
+def add_vector(embedding,chunk_id,save=True):
 
     vector=np.array(
 
@@ -47,37 +47,26 @@ def add_vector(embedding,chunk_id):
         vector
     )
 
-    index.add(
-        vector
-    )
+    index.add(vector)
 
-    metadata.append(
-        chunk_id
-    )
+    metadata.append(chunk_id)
 
-    faiss.write_index(
+    if save:
 
-        index,
-
-        INDEX_FILE
-
-    )
-
-    with open(
-
-        META_FILE,
-
-        "wb"
-
-    ) as f:
-
-        pickle.dump(
-
-            metadata,
-
-            f
-
+        faiss.write_index(
+            index,
+            INDEX_FILE
         )
+
+        with open(
+            META_FILE,
+            "wb"
+        ) as f:
+
+            pickle.dump(
+                metadata,
+                f
+            )
     print("chunk id:",chunk_id)
     print("vectors:",index.ntotal)
 def search(
