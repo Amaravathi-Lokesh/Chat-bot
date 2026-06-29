@@ -616,19 +616,20 @@ class Service:
         sedoc=await select_documents(self.genai,content,docs)
         for d in sedoc:
             print(d.id,d.filename)
-        doc_score=[]
-        for d in sedoc:
-            s=0
-            text=d.extracted_text.lower()
-            for w in search_query.lower().split():
-                if w in text:
-                    s+=1
-                    doc_score.append((s,d))
-        doc_score.sort(key=lambda x:x[0],reverse=True)
-        document_ids = []
+        # doc_score=[]
+        # for d in sedoc:
+        #     s=0
+        #     text=d.extracted_text.lower()
+        #     for w in search_query.lower().split():
+        #         if w in text:
+        #             s+=1
+        #             doc_score.append((s,d))
+        # doc_score.sort(key=lambda x:x[0],reverse=True)
+        # document_ids = []
 
-        for s,d in doc_score[:3]:
-            document_ids.append(d.id)
+        # for s,d in doc_score[:3]:
+        #     document_ids.append(d.id)
+        document_ids=[d.id for d in sedoc]
 
         print("Current Chat:", chat_id)
         print("Documents:", document_ids)
@@ -649,19 +650,47 @@ class Service:
         chunk_id=get_chunk_ids(faiss_id)
         if cached and scored>0.95:
             return cached.answer
-        
-        
-        chunks = (
+        print("Chunk IDs:", chunk_id)
+
+        all_chunks = (
             db.query(DocumentChunk)
-            .filter(
-                DocumentChunk.id.in_(chunk_id)
-            )
-            .filter(
-                DocumentChunk.document_id.in_(document_ids)
-            )
-            
+            .filter(DocumentChunk.id.in_(chunk_id))
             .all()
         )
+
+        for c in all_chunks:
+            print(
+                "Chunk:",
+                c.id,
+                "Document:",
+                c.document_id,
+                "Source:",
+                c.source
+            )
+        
+        if document_ids:
+            chunks = (
+                db.query(DocumentChunk)
+                .filter(DocumentChunk.id.in_(chunk_id))
+                .filter(DocumentChunk.document_id.in_(document_ids))
+                .all()
+            )
+        else:
+            # If Gemini didn't select any document,
+            # use every chunk returned by FAISS.
+            chunks = (
+                db.query(DocumentChunk)
+                .filter(DocumentChunk.id.in_(chunk_id))
+                .all()
+            )
+        print("Chunks after filtering:", len(chunks))
+
+        for c in chunks:
+            print(
+                c.id,
+                c.document_id,
+                c.source
+            )
         print("========== DEBUG ==========")
         print("FAISS IDs:", faiss_id)
         print("Chunk IDs:", chunk_id)
